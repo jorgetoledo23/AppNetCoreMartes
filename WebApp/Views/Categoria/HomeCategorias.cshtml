@@ -1,0 +1,37 @@
+﻿@model IEnumerable<Categoria>
+<!-- View Model-->
+
+@{
+    ViewData["Title"] = "Inicio Categorias";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="card card-cascade view view-cascade gradient-card-header blue  narrower py-2 mb-3 d-flex justify-content-between align-items-center">
+    <h2 class="white-text mx-3">Categorias</h2>
+    <a asp-action="addCategorias" class="white-text"><i class="fas fa-plus-circle fa-lg mr-2"></i>Crear Nueva Categoria</a>
+</div>
+<hr />
+<div class="row justify-content-between float-left">
+
+    @foreach (var C in Model)
+    {
+        <div class="card col-md-3 mr-3 ml-3 mb-3" style="width: auto;">
+            <img src="..." class="card-img-top" alt="...">
+            <div class="card-body text-center">
+                <h5 class="card-title">@C.Nombre</h5>
+                <h6 class="card-subtitle mb-2 text-muted">@C.Descripcion</h6>
+                <p class="card-text"></p>
+            </div>
+            <div class="row float-left justify-content-center mb-3">
+                <a asp-action="editCategoria" asp-route-CategoriaId="@C.CategoriaId" class="mr-3"><i class="fas fa-edit"></i></a>
+                <a class="mr-3"><i class="fas fa-info-circle"></i></a>
+                <a class="mr-3"><i class="fas fa-trash"></i></a>
+            </div>
+        </div>
+    }
+
+</div>
+
+
+
