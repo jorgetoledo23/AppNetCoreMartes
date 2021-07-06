@@ -12,15 +12,40 @@ namespace WebApp.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly AppDbContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, AppDbContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int Pagina)
         {
-            return View();
+            CategoriaHomeViewModel categoriaHomeViewModel = new CategoriaHomeViewModel();
+            if (Pagina == 0)
+            {
+                categoriaHomeViewModel.Pagina = 1;
+            }
+            else {
+                categoriaHomeViewModel.Pagina = Pagina;
+            }
+
+            int muestra = 3;
+            int cantidad = _context.tblCategorias.ToList().Count / 3; // 10 / 3
+            if (cantidad % muestra == 0)
+            {
+                categoriaHomeViewModel.CantidadPaginas = cantidad;
+            }
+            else {
+                categoriaHomeViewModel.CantidadPaginas = cantidad + 1;
+            }
+
+            categoriaHomeViewModel.listaCategorias = _context
+                .tblCategorias.Skip((categoriaHomeViewModel.Pagina - 1) * muestra)
+                .Take(muestra).ToList();
+
+            return View(categoriaHomeViewModel);
         }
 
         public IActionResult Privacy()

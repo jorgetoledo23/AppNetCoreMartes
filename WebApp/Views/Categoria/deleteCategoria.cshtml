@@ -1,0 +1,39 @@
+﻿@model WebApp.Models.Categoria
+
+@{
+    ViewData["Title"] = "deleteCategoria";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card card-cascade view view-cascade gradient-card-header blue  narrower py-2 mb-3 d-flex justify-content-between align-items-center">
+    <h2 class="white-text mx-3">Categorias</h2>
+    <a asp-action="HomeCategorias" class="white-text"><i class="fas fa-plus-circle fa-lg mr-2"></i>Volver al Listado...</a>
+</div>
+
+<hr />
+<div>
+
+    <h4>Detalles de la  Categoria</h4>
+    <hr />
+    <h5>Recuerda que si eliminas la Categoria se eliminaran todos los productos asociados a esta.</h5>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Descripcion)
+        </dd>
+    </dl>
+
+    <form asp-action="deleteCategoria" method="POST">
+        <input type="hidden" asp-for="CategoriaId" />
+        <input type="hidden" asp-for="Nombre" />
+        <input type="submit" value="Delete" class="btn btn-danger btn-block" />
+    </form>
+</div>
