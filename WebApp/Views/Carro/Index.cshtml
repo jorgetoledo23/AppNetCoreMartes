@@ -1,0 +1,67 @@
+﻿@model CarroCompraViewModel
+
+
+<div class="card card-cascade view view-cascade gradient-card-header blue  narrower py-2 mb-3 d-flex justify-content-between align-items-center">
+    <h2 class="white-text mx-3">Carro de Compras</h2>
+    <a asp-action="" class="white-text"><i class="fas fa-plus-circle fa-lg mr-2"></i>Agregar Productos Al Carro</a>
+</div>
+<hr />
+<table class="table">
+    <thead>
+        <tr>
+            <th class="text-center">
+                Nombre
+            </th>
+            <th class="text-center">
+                Precio
+            </th>
+            <th class="text-center">
+                Imagen
+            </th>
+            <th class="text-center">
+                Cantidad
+            </th>
+            <th class="text-center">
+                Categoria
+            </th>
+            <th class="text-center">
+                Sub Total
+            </th>
+            <th class="text-center"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.ItemsCarro)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Producto.Nombre)
+            </td>
+            <td>
+                @string.Format(new System.Globalization.CultureInfo("es-CL"), "{0:C}", item.Producto.Precio)
+            </td>
+            <td>
+                <img src="~/images/@item.Producto.Imagen" class="card-img-top" alt="..." style="height:50px">
+            </td>
+            <td class="text-center">
+                @Html.DisplayFor(modelItem => item.Cantidad)
+            </td>
+            <td class="text-center">
+                @Html.DisplayFor(modelItem => item.Producto.Categoria.Nombre)
+            </td>
+            <td class="text-center">
+                @string.Format(new System.Globalization.CultureInfo("es-CL"), "{0:C}", item.Producto.Precio * item.Cantidad)
+            </td>
+            <td class="text-center">
+                <a asp-action="Del" asp-route-ProductoId="@item.ProductoId"><i class="fas fa-trash"></i></a>
+            </td>
+        </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td class="text-right text-info" colspan="6">Total</td>
+            <td class="text-center">@string.Format(new System.Globalization.CultureInfo("es-CL"), "{0:C}", Model.Total)</td>
+        </tr>
+    </tfoot>
+</table>

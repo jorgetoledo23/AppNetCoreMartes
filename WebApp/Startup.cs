@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -30,12 +31,18 @@ namespace WebApp
             //Agregar el Servicio de Base De Datos
             services.AddDbContext<AppDbContext>();
             //services.AddDbContext<AppDbContext>(options => 
-               //options.UseSqlServer(Configuration.GetConnectionString("SqlServerConnection")));
+            //options.UseSqlServer(Configuration.GetConnectionString("SqlServerConnection")));
 
-            
+            //Servicio para rescatar el contexto de la aplicacion
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
+            services.AddScoped(carroCompra => CarroCompra.GetCarro(carroCompra));
 
             services.AddControllersWithViews();
+
+            //Utilizar y guardar en la session
+            services.AddSession();
+            services.AddMemoryCache();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,6 +60,9 @@ namespace WebApp
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            //Utilizar session
+            app.UseSession();
 
             app.UseRouting();
 

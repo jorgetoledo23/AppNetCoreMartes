@@ -23,6 +23,8 @@ namespace WebApp.Controllers
         public IActionResult HomeCategorias()
         {
             //List<Categoria> listaCategorias = _context.tblCategorias.ToList();
+            
+            
             return View(_context.tblCategorias.ToList());
         }
 

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -58,5 +59,16 @@ namespace WebApp.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+
+        public IActionResult IndexProductos(int CategoriaId) {
+            return View(_context.tblProductos.Where(p => p.CategoriaId == CategoriaId)
+                .Include(p => p.Categoria).ToList());
+        }
+
+
+
+
+
     }
 }

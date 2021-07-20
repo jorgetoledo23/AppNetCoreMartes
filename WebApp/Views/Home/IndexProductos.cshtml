@@ -1,0 +1,24 @@
+﻿@model ICollection<Producto>
+
+
+<div class="row justify-content-between" style="min-height:450px;">
+    @foreach (var P in Model)
+    {
+        <div class="card col-sm-3 mr-1 ml-1 mb-3" style="width: auto; max-width:430px; max-height: 500px;">
+            <div class="card-body text-center">
+                <h5 class="card-title"><strong>@P.Nombre</strong></h5>
+            </div>
+            <a asp-controller="#" asp-action="#" asp-route-CategoriaId="@P.CategoriaId">
+                <img src="~/images/@P.Imagen" class="card-img-top" alt="...">
+            </a>
+            <div class="card-body text-center">
+                <h6 class="card-subtitle mb-2 text-muted">@string.Format(new System.Globalization.CultureInfo("es-CL"), "{0:C}", P.Precio)</h6>
+                <p class="card-text">@string.Format(new System.Globalization.CultureInfo("es-CL"), "{0:C}", P.PrecioOferta)</p>
+                <a class="btn btn-outline-info" 
+                   asp-controller="Carro"
+                   asp-action="Add"
+                   asp-route-ProductoId="@P.ProductoId">Agregar al Carro</a>
+            </div>
+        </div>
+    }
+</div>

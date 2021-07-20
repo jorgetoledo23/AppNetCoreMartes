@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApp.Models;
 
 namespace WebApp.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210713204802_productos")]
+    partial class productos
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -39,29 +41,6 @@ namespace WebApp.Migrations
                     b.HasKey("CategoriaId");
 
                     b.ToTable("tblCategorias");
-                });
-
-            modelBuilder.Entity("WebApp.Models.ItemsCarro", b =>
-                {
-                    b.Property<int>("ItemsCarroId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("Cantidad")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CarroCompraId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ProductoId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ItemsCarroId");
-
-                    b.HasIndex("ProductoId");
-
-                    b.ToTable("tblItemsCarro");
                 });
 
             modelBuilder.Entity("WebApp.Models.Producto", b =>
@@ -97,15 +76,6 @@ namespace WebApp.Migrations
                     b.HasIndex("CategoriaId");
 
                     b.ToTable("tblProductos");
-                });
-
-            modelBuilder.Entity("WebApp.Models.ItemsCarro", b =>
-                {
-                    b.HasOne("WebApp.Models.Producto", "Producto")
-                        .WithMany()
-                        .HasForeignKey("ProductoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("WebApp.Models.Producto", b =>

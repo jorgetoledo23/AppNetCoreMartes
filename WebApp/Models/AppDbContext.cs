@@ -21,5 +21,7 @@ namespace WebApp.Models
         }
 
         public DbSet<Categoria> tblCategorias { get; set; }
+        public DbSet<Producto> tblProductos { get; set; }
+        public DbSet<ItemsCarro> tblItemsCarro { get; set; }
     }
 }

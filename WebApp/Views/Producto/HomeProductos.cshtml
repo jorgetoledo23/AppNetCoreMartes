@@ -1,0 +1,101 @@
+﻿@model ProductoHomeViewModel
+
+@{
+    ViewData["Title"] = "HomeProductos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card card-cascade view view-cascade gradient-card-header blue  narrower py-2 mb-3 d-flex justify-content-between align-items-center">
+    <h2 class="white-text mx-3">Administracion de Productos</h2>
+    <a asp-action="AddProducto" class="white-text"><i class="fas fa-plus-circle fa-lg mr-2"></i>Agregar Nuevo Producto</a>
+</div>
+<hr />
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Nombre
+            </th>
+            <th>
+                Precio
+            </th>
+            <th>
+                PrecioOferta
+            </th>
+            <th>
+                EnOferta
+            </th>
+            <th>
+                Stock
+            </th>
+            <th>
+                Imagen
+            </th>
+            <th>
+                Categoria
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.listaProductos) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @string.Format(new System.Globalization.CultureInfo("es-CL"), "{0:C}", item.Precio)
+            </td>
+            <td>
+                @string.Format(new System.Globalization.CultureInfo("es-CL"), "{0:C}", item.PrecioOferta)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EnOferta)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Stock)
+            </td>
+            <td>
+                <img src="~/images/@item.Imagen" class="card-img-top" alt="..." style="height:50px">
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Categoria.Nombre)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ProductoId"><i class="fas fa-edit"></i></a>
+                <a asp-action="Details" asp-route-id="@item.ProductoId"><i class="fas fa-info-circle"></i></a>
+                <a asp-action="Delete" asp-route-id="@item.ProductoId"><i class="fas fa-trash"></i></a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<div class="row justify-content-center">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+
+            @if (Model.Pagina != 1)
+            {
+                <li class="page-item"><a class="page-link" asp-action="HomeProductos" asp-route-Pagina="@TempData["PaginaAnterior"]">Anterior</a></li>
+            }
+            else
+            {
+                <li class="page-item disabled"><a class="page-link" asp-action="HomeProductos" asp-route-Pagina="@TempData["PaginaAnterior"]">Anterior</a></li>
+            }
+            @for (int i = 1; i <= Model.CantidadPaginas; i++)
+            {
+                <li class="page-item"><a class="page-link" asp-action="HomeProductos" asp-route-Pagina="@i">@i</a></li>
+            }
+            @if (Model.Pagina != Model.CantidadPaginas)
+            {
+                <li class="page-item"><a class="page-link" asp-action="HomeProductos" asp-route-Pagina="@TempData["PaginaSiguiente"]">Siguiente</a></li>
+            }
+            else
+            {
+                <li class="page-item disabled"><a class="page-link" asp-action="HomeProductos" asp-route-Pagina="@TempData["PaginaSiguiente"]">Siguiente</a></li>
+            }
+        </ul>
+    </nav>
+
+</div>
